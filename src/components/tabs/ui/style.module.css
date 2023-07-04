@@ -1,0 +1,55 @@
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btnTab:first-child {
+    border-radius: 10px 0 0;
+}
+
+.btnTab:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+.tabs button {
+    background-color: lightgray;
+    border: none;
+    color: #888888;
+    cursor: pointer;
+    padding: 25px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.5s ease-out;
+}
+
+.tabs button:hover {
+    color: white;
+    background-color: #1a1a1a;
+}
+
+.tabs button:disabled {
+    background: linear-gradient(245.39deg, #FC65ED -35.14%, #0500FF 143.06%);
+    color: white;
+}
+
+
+.content {
+    height: calc(100vh - 300px);
+    padding: 50px 80px;
+    background-color: white;
+    font-weight: 300;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: justify;
+    border-radius: 0 0 10px 10px;
+}
+
+.content,
+button {
+    font-size: 15px;
+}
