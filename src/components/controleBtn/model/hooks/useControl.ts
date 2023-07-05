@@ -1,5 +1,5 @@
-import { useState, ChangeEvent } from 'react';
-import { TButton } from "../types";
+import { useState, ChangeEvent } from 'react'
+import { TButton } from "../types"
 
 const useControl = (leftButtons?: TButton[], rightButtons?: TButton[]) => {
     const [control, setControl] = useState('')
