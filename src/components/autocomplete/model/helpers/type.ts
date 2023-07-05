@@ -1,3 +1,3 @@
 export interface IAutocompleteProps {
-    inititalCount: number,
+    id: number,
 }

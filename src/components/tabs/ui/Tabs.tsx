@@ -40,7 +40,7 @@ const Tabs = () => {
             <div className={s.content}>
                 {tabs.map((tab, i) =>
                     <div key={i}>
-                        {currentTab === `${tab.id}` && <p>{tab.content}</p>}
+                        {currentTab === `${tab.id}` && <section>{tab.content}</section>}
                     </div>
                 )}
             </div>

@@ -1,12 +1,17 @@
 import { AutoComplete } from 'components/autocomplete'
+import AutoCompleteStore from 'store/autocomplete/autocomplete'
 import s from './style.module.css'
 
 const AutocompleteWidget = () => {
     return (
-        <section className={s.main}>
-            <AutoComplete inititalCount={3} />
-            <AutoComplete inititalCount={10} />
-        </section>
+        <div className={s.main}>
+            {AutoCompleteStore.autocomplete.map((it) => 
+                <AutoComplete 
+                    key={it.id}
+                    id={it.id}
+                />
+            )}
+        </div>
     )
 }
 

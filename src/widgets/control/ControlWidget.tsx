@@ -3,10 +3,10 @@ import s from './style.module.css'
 
 const ControlWidget = () => {
     return (
-        <section className={s.main}>
+        <div className={s.main}>
             <CustomInputWithControls rightButtons={['Clear', 'Set default text']} />
             <CustomInputWithControls leftButtons={['Get number']} rightButtons={['Get text']}/>
-        </section>
+        </div>
     )
 }
 

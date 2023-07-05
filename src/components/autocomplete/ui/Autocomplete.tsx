@@ -8,41 +8,54 @@ import { MenuItem } from 'shared/ui/menuItem'
 import { SelectButton } from 'shared/ui/selectButton'
 import { availableCounts } from '../model/helpers/helpers'
 
-const AutoComplete = ({ inititalCount }: IAutocompleteProps) => {
-    const [count, setCount] = useState(inititalCount)
-    const [controlValue, setControlValue] = useState('')
+import AutoCompleteStore from 'store/autocomplete/autocomplete'
+import { observer } from 'mobx-react-lite'
+
+const AutoComplete = observer(({ id }: IAutocompleteProps) => {
+    const {
+        updateInputValue,
+        updateMaxCount,
+        getMaxCount,
+        getInputValue,
+    } = AutoCompleteStore
+
     const {
         countries,
         errors,
         status,
         getCountries,
-    } = useCountries(count)
+    } = useCountries(getMaxCount(id))
 
+    const [InitialValue, setInitialValue] = useState(getInputValue(id) ?? '')
+    const [inititalCount, setInititalCount] = useState(getMaxCount(id))
+    
     useEffect(() => {
-        if (controlValue.length > 0) getCountries(controlValue)
-    }, [controlValue, count])
+        if (InitialValue.length > 0) getCountries(InitialValue)
+    }, [InitialValue, inititalCount])
+
 
     const handleCountChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		setCount(Number(e.target.value));
+        updateMaxCount(id, Number(e.target.value))
+        setInititalCount(Number(e.target.value))
 	}
 
     const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
-		setControlValue(value);
+        updateInputValue(id, e.target.value)
+        setInitialValue(e.target.value)
 	}
 
     const handleSelectCountry = (countryName: string) => {
-		setControlValue(countryName);
+        updateInputValue(id, countryName)
 	}
 
     return (
         <div className={s.main}>
             <Search
-                value={controlValue}
+                value={getInputValue(id)}
                 placeholder='Type country name'
                 loading={status === 'loading'}
                 error={status === 'error' ? errors : null}
-                options={controlValue.length > 0 ? countries : []}
+                options={InitialValue.length > 0 ? countries : []}
                 onChange={handleChange}
             >
                 {countries.map((it) => (
@@ -57,7 +70,8 @@ const AutoComplete = ({ inititalCount }: IAutocompleteProps) => {
             </Search>
             <SelectButton
                 onChange={handleCountChange}
-                defaultValue={count}
+                defaultValue={getMaxCount(id)}
+                className={s.select}
             >
                 {[...new Set([inititalCount, ...availableCounts])].map((count) => (
 					<option key={count} value={count}>
@@ -67,6 +81,6 @@ const AutoComplete = ({ inititalCount }: IAutocompleteProps) => {
             </SelectButton>
         </div>
     )
-}
+})
 
 export default AutoComplete
