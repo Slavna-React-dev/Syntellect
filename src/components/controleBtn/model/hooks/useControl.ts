@@ -1,17 +1,20 @@
 import { useState, ChangeEvent } from 'react'
+import ControlStore from 'store/control/control'
 import { TButton } from "../types"
 
-const useControl = (leftButtons?: TButton[], rightButtons?: TButton[]) => {
-    const [control, setControl] = useState('')
+const useControl = (id: number, leftButtons?: TButton[], rightButtons?: TButton[]) => {
+    // const [control, setControl] = useState('')
     const [leftBtn, setLeftBtn] = useState<TButton[]>(leftButtons ?? [])
     const [rightBtn, setRightBtn] = useState<TButton[]>(rightButtons ?? [])
     const [errors, setErrors] = useState<string | null>(null)
 
-    const clearControl = () => setControl('')
+    const {updateInputValue, getInputValue} = ControlStore
+
+    const clearControl = () => updateInputValue(id, '')
 
     const clearErrors = () => setErrors(null)
 
-    const changeInputValue = () => setControl('Hello, World!')
+    const changeInputValue = () => updateInputValue(id, 'Hello, World!')
 
     const handleChangeBtnSide = (side: 'left' | 'right', idx: number, newTitle: TButton) => {
         if (side === 'left') {
@@ -25,22 +28,23 @@ const useControl = (leftButtons?: TButton[], rightButtons?: TButton[]) => {
 
     const handleChangeControlValue = (e: ChangeEvent<HTMLInputElement>) => {
         clearErrors()
-        setControl(e.target.value)
+        // setControl(e.target.value)
+        updateInputValue(id, e.target.value)
     }
 
     const getText = () => {
-        if (control) {
+        if (getInputValue(id)) {
             clearErrors()
-            alert(control)
+            alert(getInputValue(id))
         } else {
             setErrors('Fill in the field!')
         }
     }
 
     const getNumber = () => {
-        if (Number(control)) {
+        if (Number(getInputValue(id))) {
             clearErrors()
-            alert(control)
+            alert(getInputValue(id))
         } else {
             setErrors('The value is not a number!')
         }
@@ -70,7 +74,7 @@ const useControl = (leftButtons?: TButton[], rightButtons?: TButton[]) => {
     ]
 
     return {
-        control,
+        control: getInputValue(id),
         leftBtn,
         rightBtn,
         handleChangeControlValue,

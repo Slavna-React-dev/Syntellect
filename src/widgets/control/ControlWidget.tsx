@@ -4,8 +4,8 @@ import s from './style.module.css'
 const ControlWidget = () => {
     return (
         <div className={s.main}>
-            <CustomInputWithControls rightButtons={['Clear', 'Set default text']} />
-            <CustomInputWithControls leftButtons={['Get number']} rightButtons={['Get text']}/>
+            <CustomInputWithControls id={1} rightButtons={['Clear', 'Set default text']} />
+            <CustomInputWithControls id={2} leftButtons={['Get number']} rightButtons={['Get text']}/>
         </div>
     )
 }

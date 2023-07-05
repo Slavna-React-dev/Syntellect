@@ -3,8 +3,9 @@ import { useControl } from "../model/hooks"
 import { IProps } from "../model/types"
 import { ChangeButton } from "./button"
 import s from './style.module.css'
+import { observer } from "mobx-react-lite"
 
-const CustomInputWithControls = ({leftButtons, rightButtons} :IProps) => {
+const CustomInputWithControls = observer(({id, leftButtons, rightButtons} :IProps) => {
     const {
         control,
         defaultButtons,
@@ -13,7 +14,7 @@ const CustomInputWithControls = ({leftButtons, rightButtons} :IProps) => {
         handleChangeControlValue,
         leftBtn,
         rightBtn,
-    } = useControl(leftButtons, rightButtons)
+    } = useControl(id, leftButtons, rightButtons)
     
     return (
         <div className={s.main}>
@@ -44,6 +45,6 @@ const CustomInputWithControls = ({leftButtons, rightButtons} :IProps) => {
             </div>
         </div>
     )
-}
+})
 
 export default CustomInputWithControls
