@@ -1,11 +1,17 @@
-import { CustomInput } from "shared/ui/input"
-import { useControl } from "../model/hooks"
-import { IProps } from "../model/types"
-import { ChangeButton } from "./button"
-import s from './style.module.css'
-import { observer } from "mobx-react-lite"
+import React, { useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
+import controlStore from 'mobx/viewModels/control/ControlViewModel';
+import { CustomInput } from "shared/ui/input";
+import { IProps } from "../model/types";
+import { ChangeButton } from "./button";
+import s from './style.module.css';
 
-const CustomInputWithControls = observer(({id, leftButtons, rightButtons} :IProps) => {
+const ControlView: React.FC<IProps> = observer(({id, leftButtons, rightButtons}) => {
+
+    useEffect(() => {
+        controlStore.setButtons(id, leftButtons, rightButtons);
+    }, [id, leftButtons, rightButtons]);
+
     const {
         control,
         defaultButtons,
@@ -14,7 +20,7 @@ const CustomInputWithControls = observer(({id, leftButtons, rightButtons} :IProp
         handleChangeControlValue,
         leftBtn,
         rightBtn,
-    } = useControl(id, leftButtons, rightButtons)
+    } = controlStore.getControl(id)
     
     return (
         <div className={s.main}>
@@ -32,7 +38,7 @@ const CustomInputWithControls = observer(({id, leftButtons, rightButtons} :IProp
                     value={control}
                     error={errors}
                     placeholder="Print whatever you want"
-                    onChange={handleChangeControlValue}
+                    onChange={(e) => handleChangeControlValue(id, e)}
                 />
             </div>
             <div className={s.side}>
@@ -47,4 +53,4 @@ const CustomInputWithControls = observer(({id, leftButtons, rightButtons} :IProp
     )
 })
 
-export default CustomInputWithControls
+export default ControlView;

@@ -8,7 +8,7 @@ import { MenuItem } from 'shared/ui/menuItem'
 import { SelectButton } from 'shared/ui/selectButton'
 import { availableCounts } from '../model/helpers/helpers'
 
-import AutoCompleteStore from 'store/autocomplete/autocomplete'
+import AutoCompleteStore from 'mobx/viewModels/autocopmlete/AutoCompleteViewModel'
 import { observer } from 'mobx-react-lite'
 
 const AutoComplete = observer(({ id }: IAutocompleteProps) => {
@@ -17,29 +17,28 @@ const AutoComplete = observer(({ id }: IAutocompleteProps) => {
         updateMaxCount,
         getMaxCount,
         getInputValue,
+        getCountries,
     } = AutoCompleteStore
+
+    const [InitialValue, setInitialValue] = useState(getInputValue(id) ?? '')
+    const [inititalCount, setInititalCount] = useState(getMaxCount(id))
 
     const {
         countries,
         errors,
         status,
-        getCountries,
-    } = useCountries(getMaxCount(id))
+    } = useCountries(InitialValue, inititalCount)
 
-    const [InitialValue, setInitialValue] = useState(getInputValue(id) ?? '')
-    const [inititalCount, setInititalCount] = useState(getMaxCount(id))
-    
     useEffect(() => {
-        if (InitialValue.length > 0) getCountries(InitialValue)
-    }, [InitialValue, inititalCount])
-
+        if (InitialValue.length > 0) getCountries(id)
+    }, [InitialValue, inititalCount, getCountries])
 
     const handleCountChange = (e: ChangeEvent<HTMLSelectElement>) => {
         updateMaxCount(id, Number(e.target.value))
         setInititalCount(Number(e.target.value))
 	}
 
-    const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         updateInputValue(id, e.target.value)
         setInitialValue(e.target.value)
 	}

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import s from './style.module.css'
-import { AutocompleteWidget, ControlWidget } from 'widgets';
+import { AutocompleteWidget } from 'widgets';
+import CustomInputWithControls from 'components/controleBtn/ui/CustomInputWithControls'
 
 
 const Tabs = () => {
@@ -8,11 +9,16 @@ const Tabs = () => {
     const tabs = [
         {
             id: '1',
-            tabTitle: 'Control with buttons',
-            content: <ControlWidget />
+            tabTitle: 'Control with buttons on the right side',
+            content: <CustomInputWithControls id={1} rightButtons={['Clear', 'Set default text']} />
         },
         {
             id: '2',
+            tabTitle: 'Control with buttons on both sides',
+            content: <CustomInputWithControls id={2} leftButtons={['Get number']} rightButtons={['Get text']}/>
+        },
+        {
+            id: '3',
             tabTitle: 'Control-autocomplete',
             content: <AutocompleteWidget />
         },

@@ -1,5 +1,5 @@
 import { AutoComplete } from 'components/autocomplete'
-import AutoCompleteStore from 'store/autocomplete/autocomplete'
+import AutoCompleteStore from 'mobx/viewModels/autocopmlete/AutoCompleteViewModel'
 import s from './style.module.css'
 
 const AutocompleteWidget = () => {
